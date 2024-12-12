@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player Embed Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        #embedCode {
+            width: 100%;
+            min-height: 150px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Audio Player Embed Generator</h1>
+    
+    <div class="form-group">
+        <label for="audioUrl">Audio Source URL:</label>
+        <input type="text" id="audioUrl" placeholder="Enter full URL to audio file">
+    </div>
+
+    <div class="form-group">
+        <label for="playerTitle">Player Title:</label>
+        <input type="text" id="playerTitle" placeholder="Enter player title">
+    </div>
+
+    <div class="form-group">
+        <label for="playerSubtitle">Player Subtitle:</label>
+        <input type="text" id="playerSubtitle" placeholder="Enter player subtitle">
+    </div>
+
+    <div class="form-group">
+        <label for="playerWidth">Player Width (optional):</label>
+        <input type="text" id="playerWidth" placeholder="Default: 360px" value="360px">
+    </div>
+
+    <button id="generateBtn">Generate Embed Code</button>
+
+    <textarea id="embedCode" readonly placeholder="Your embed code will appear here"></textarea>
+    <button id="copyBtn" style="display: none;">Copy Embed Code</button>
+
+    <script>
+        const audioUrlInput = document.getElementById('audioUrl');
+        const playerTitleInput = document.getElementById('playerTitle');
+        const playerSubtitleInput = document.getElementById('playerSubtitle');
+        const playerWidthInput = document.getElementById('playerWidth');
+        const generateBtn = document.getElementById('generateBtn');
+        const embedCodeTextarea = document.getElementById('embedCode');
+        const copyBtn = document.getElementById('copyBtn');
+
+        generateBtn.addEventListener('click', () => {
+            // Validate audio URL
+            if (!audioUrlInput.value) {
+                alert('Please enter an audio URL');
+                return;
+            }
+
+            // Default to 360px if no width provided
+            const width = playerWidthInput.value || '360px';
+
+            // Create embed code
+            const embedCode = `<iframe 
+  src="https://YOUR-GITHUB-PAGES-URL.github.io/audio-player/?src=${encodeURIComponent(audioUrlInput.value)}&title=${encodeURIComponent(playerTitleInput.value)}&subtitle=${encodeURIComponent(playerSubtitleInput.value)}" 
+  style="width: ${width}; border: none;" 
+  scrolling="no"
+></iframe>`.trim();
+
+            // Display embed code
+            embedCodeTextarea.value = embedCode;
+            copyBtn.style.display = 'block';
+        });
+
+        // Copy embed code to clipboard
+        copyBtn.addEventListener('click', () => {
+            embedCodeTextarea.select();
+            try {
+                document.execCommand('copy');
+                alert('Embed code copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy embed code');
+            }
+        });
+    </script>
+</body>
+</html>
