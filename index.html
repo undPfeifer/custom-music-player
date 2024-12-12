@@ -105,6 +105,35 @@
     font-weight: lighter;
   }
 </style>
+    <!-- Your existing head content -->
+    <script>
+        // Add this to the top of your existing script
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            
+            // Update audio source if provided
+            const audioSrc = params.get('src');
+            if (audioSrc) {
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = audioSrc;
+            }
+
+            // Update title if provided
+            const titleEl = document.querySelector('.playerTitel');
+            const titleParam = params.get('title');
+            if (titleParam) {
+                titleEl.textContent = titleParam;
+            }
+
+            // Update subtitle if provided
+            const subtitleEl = document.querySelector('.playerUntertitel');
+            const subtitleParam = params.get('subtitle');
+            if (subtitleParam) {
+                subtitleEl.textContent = subtitleParam;
+            }
+        });
+    </script>
 <body>
   <div class="playerContainer">
     <h1 class="playerTitel">Liebevolles Atmen</h1>
