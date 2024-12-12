@@ -106,9 +106,9 @@
 
     <div class="playerControlsContainer">
       <div class="playerControlFlex">
-        <img id="prevButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/arrow skip back.svg" alt="Previous" class="skipArrows">
-        <img id="playPauseButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/play button.svg" class="skipArrows">
-        <img id="nextButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/arrow skip front.svg" alt="Next" class="skipArrows">
+        <img id="prevButton" src="arrow skip back.svg" alt="Previous" class="skipArrows">
+        <img id="playPauseButton" src="play button.svg" class="skipArrows">
+        <img id="nextButton" src="arrow skip front.svg" alt="Next" class="skipArrows">
       </div>
     </div>
 
@@ -164,10 +164,10 @@
     function togglePlayPause() {
       if (audio.paused) {
         audio.play();
-        playPauseButton.src = '/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/pause button.svg';
+        playPauseButton.src = 'pause button.svg';
       } else {
         audio.pause();
-        playPauseButton.src = '/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/play button.svg';
+        playPauseButton.src = 'play button.svg';
       }
     }
 
