@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  body {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0px;
+  }
+  .playerContainer {
+    box-sizing: border-box;
+    width: 360px;
+    height: auto;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    background: #FBEFDF;
+    border: 2px solid #000000;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.24), inset 1px 1px 1px #FFFFFF;
+    transform: scale(1.0);
+  }
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FBEFDF;
+  }
+  .playerTitel {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+  }
+  .playerUntertitel {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0px;
+    padding: 0px;
+    opacity: 100%;
+    margin-top: 2px;
+    margin-bottom: 10px;
+  }
+  .playerDivider1 {
+    height: 0px;
+    margin-top: 5px;
+    border-top: 1px solid black;
+    border-bottom: 0px solid black;
+    margin-right: -9px;
+    margin-left: -9px;
+  }
+  .playerProgressContainer {
+    height: 20px;
+    width: 100%;
+    background-color: #D9D9D9;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+  }
+  .playerProgressBar {
+    height: 20px;
+    width: 0%;
+    background-color: #878787;
+  }
+  .playerControlsContainer {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    gap: 0px;
+  }
+  .playerControlFlex {
+    box-sizing: content-box;
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    gap: 
+  }
+  .skipArrows {
+    height: 25px;
+    cursor: pointer;
+  }
+  .playerTimeFlex {
+    display: flex;
+    gap: 4px;
+    margin: 0px;
+    height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .timeText {
+    margin: 0px;
+    font-size: 14px;
+    font-weight: lighter;
+  }
+</style>
+<body>
+  <div class="playerContainer">
+    <h1 class="playerTitel">Liebevolles Atmen</h1>
+    <h1 class="playerUntertitel">gesprochen von Silvie Pfeifer auf Schweizerdeutsch</h1>
+    <div class="playerDivider1"></div>
+
+    <audio id="audioPlayer" src="/Users/test/Desktop/vs code/music player/nei.mp3"> </audio>
+
+    <div class="playerControlsContainer">
+      <div class="playerControlFlex">
+        <img id="prevButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/arrow skip back.svg" alt="Previous" class="skipArrows">
+        <img id="playPauseButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/play button.svg" class="skipArrows">
+        <img id="nextButton" src="/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/arrow skip front.svg" alt="Next" class="skipArrows">
+      </div>
+    </div>
+
+    <div class="playerProgressContainer" id="playerProgressContainer">
+      <div class="playerProgressBar" id="playerProgressBar"></div>
+    </div>
+
+    <div class="playerTimeFlex">
+      <h3 class="timeText" id="currentTime">0:00</h3>
+      <h3 class="timeText">/</h3>
+      <h3 class="timeText" id="totalTime">0:00</h3>
+    </div>
+  </div>
+
+  <script>
+    // Get DOM elements
+    const audio = document.getElementById('audioPlayer');
+    const playPauseButton = document.getElementById('playPauseButton');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const progressContainer = document.getElementById('playerProgressContainer');
+    const progressBar = document.getElementById('playerProgressBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const totalTimeEl = document.getElementById('totalTime');
+
+    // Format time to MM:SS
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+
+    // Update progress bar and time
+    function updateProgress() {
+      const { currentTime, duration } = audio;
+      const progressPercent = (currentTime / duration) * 100;
+      
+      progressBar.style.width = `${progressPercent}%`;
+      currentTimeEl.textContent = formatTime(currentTime);
+      totalTimeEl.textContent = formatTime(duration);
+    }
+
+    // Set progress on click
+    function setProgress(e) {
+      const width = progressContainer.clientWidth;
+      const clickX = e.offsetX;
+      const duration = audio.duration;
+      
+      audio.currentTime = (clickX / width) * duration;
+    }
+
+    // Play/Pause toggle
+    function togglePlayPause() {
+      if (audio.paused) {
+        audio.play();
+        playPauseButton.src = '/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/pause button.svg';
+      } else {
+        audio.pause();
+        playPauseButton.src = '/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/play button.svg';
+      }
+    }
+
+    // Event Listeners
+    playPauseButton.addEventListener('click', togglePlayPause);
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('loadedmetadata', updateProgress);
+    progressContainer.addEventListener('click', setProgress);
+
+    // Prevent default next/prev actions (you'd replace these with actual playlist logic)
+    prevButton.addEventListener('click', () => {
+        audio.currentTime-= 10;
+    });
+
+    nextButton.addEventListener('click', () => {
+        audio.currentTime+= 10;
+
+    });
+
+    // When audio ends
+    audio.addEventListener('ended', () => {
+      playPauseButton.src = '/Users/test/Desktop/vs code/music player/supabase/embed-music-player/assets/icons/play button.svg';
+    });
+
+
+// Dragging state variables
+let isDragging = false;
+
+// Set progress on click or drag
+function setProgress(e) {
+ if (!audio.duration) return;
+ 
+ const width = progressContainer.clientWidth;
+ const clickX = e.type === 'click' ? e.offsetX : 
+                (e.clientX - progressContainer.getBoundingClientRect().left);
+ const duration = audio.duration;
+ 
+ const newTime = (clickX / width) * duration;
+ audio.currentTime = Math.min(Math.max(0, newTime), duration);
+}
+
+// Drag start
+function startDragging(e) {
+ isDragging = true;
+ setProgress(e);
+ e.preventDefault();
+}
+
+// Dragging
+function drag(e) {
+ if (!isDragging) return;
+ setProgress(e);
+ e.preventDefault();
+}
+
+// Stop dragging
+function stopDragging() {
+ isDragging = false;
+}
+
+// Add these event listeners
+progressContainer.addEventListener('mousedown', startDragging);
+document.addEventListener('mousemove', drag);
+document.addEventListener('mouseup', stopDragging);
+
+
+
+  </script>
+</body>
+</html>
