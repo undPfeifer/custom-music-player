@@ -5,68 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Player Embed Generator</title>
     <style>
+    @font-face {
+        font-family: 'Monument Grotesk';
+        src: url('/Users/test/Desktop/vs code/music player/supabase/MonumentGrotesk-Bold.otf');
+    }
         body {
-            font-family: Arial, sans-serif;
+            font-family: Monument Grotesk;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
         }
+
+        h1 {
+            font-family: Monument Grotesk;
+            font-weight: 500;
+            font-size: 58px;
+            line-height: 64px;
+            text-transform: uppercase;
+            margin-top: -48px;
+            letter-spacing: -2px;
+            
+
+        }
+
+        h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 58px;
+            line-height: 52px;
+           
+
+        }
+
+        h3 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 58px;
+            line-height: 52px;
+            font-style: italic;
+        }
+
+        input {
+        border: 0px;
+        border-bottom: 2px solid black;
+        padding-left: 0px;
+        }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: -4px;
             font-weight: bold;
+            font-size: 18px;
         }
         input, textarea {
             width: 100%;
             padding: 10px;
+            padding-left: 0px;
             margin-bottom: 10px;
             box-sizing: border-box;
         }
         button {
-            background-color: #007bff;
+            background-color: black;
             color: white;
             border: none;
             padding: 10px 15px;
             cursor: pointer;
+            height: 50px;
+            width: 200px;
+            
         }
         #embedCode {
             width: 100%;
             min-height: 150px;
             margin-top: 15px;
         }
+        textarea {
+            padding-left: 10px;
+        }
+        .flex-hor {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
-    <h1>Audio Player Embed Generator</h1>
+    <div class="flex-hor">  
+        <h2> SML</h2>
+        <h3> &pfeifer</h3>
+        
+    </div>
+    <h1>Embed Generator</h1>
     
     <div class="form-group">
-        <label for="audioUrl">Audio Source URL:</label>
-        <input type="text" id="audioUrl" placeholder="Enter full URL to audio file">
+        <label for="audioUrl">URL Link zur Audiodatei</label>
+        <input type="text" id="audioUrl" placeholder="Ganze url zur Audiodatei einfügen">
     </div>
 
     <div class="form-group">
-        <label for="playerTitle">Player Title:</label>
-        <input type="text" id="playerTitle" placeholder="Enter player title">
+        <label for="playerTitle">Titel</label>
+        <input type="text" id="playerTitle" placeholder="ganzen Titel eingeben">
     </div>
 
     <div class="form-group">
-        <label for="playerSubtitle">Player Subtitle:</label>
-        <input type="text" id="playerSubtitle" placeholder="Enter player subtitle">
+        <label for="playerSubtitle">Untertitel</label>
+        <input type="text" id="playerSubtitle" placeholder="ganzen Untertitel eingeben">
     </div>
 
     <div class="form-group">
-        <label for="playerWidth">Player Width (optional):</label>
+        <label for="playerWidth">Player Breite (px oder %)</label>
         <input type="text" id="playerWidth" placeholder="Default: 360px" value="360px">
     </div>
 
-    <button id="generateBtn">Generate Embed Code</button>
+    <button id="generateBtn">Embed Code generieren</button>
 
-    <textarea id="embedCode" readonly placeholder="Your embed code will appear here"></textarea>
-    <button id="copyBtn" style="display: none;">Copy Embed Code</button>
+    <textarea id="embedCode" readonly placeholder="Embed Code erscheint hier"></textarea>
+    <button id="copyBtn" style="display: none;">Embed Code kopieren</button>
 
     <script>
         const audioUrlInput = document.getElementById('audioUrl');
