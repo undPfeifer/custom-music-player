@@ -269,7 +269,15 @@ progressContainer.addEventListener('mousedown', startDragging);
 document.addEventListener('mousemove', drag);
 document.addEventListener('mouseup', stopDragging);
 
+// Add at the end of your existing script
+function updateParentHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'resize', height: height }, '*');
+}
 
+// Call when content changes
+window.addEventListener('load', updateParentHeight);
+document.addEventListener('DOMContentLoaded', updateParentHeight);
 
   </script>
 </body>
