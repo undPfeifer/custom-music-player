@@ -142,11 +142,21 @@ t<!DOCTYPE html>
             const width = playerWidthInput.value || '360px';
 
             // Create embed code
-            const embedCode = `<iframe 
+const embedCode = `<iframe 
+  id="audioPlayerFrame"
   src="https://undpfeifer.github.io/custom-music-player/?src=${encodeURIComponent(audioUrlInput.value)}&title=${encodeURIComponent(playerTitleInput.value)}&subtitle=${encodeURIComponent(playerSubtitleInput.value)}" 
-  style="width: ${width}; border: none; height: 450px;" 
+  style="width: ${width}; border: none;" 
   scrolling="no"
-></iframe>`.trim();
+></iframe>
+<script>
+window.addEventListener('message', function(e) {
+    if (e.data.type === 'resize') {
+        document.getElementById('audioPlayerFrame').style.height = e.data.height + 'px';
+    }
+});
+</script>`.trim();
+
+    
 
             // Display embed code
             embedCodeTextarea.value = embedCode;
@@ -164,6 +174,12 @@ t<!DOCTYPE html>
                 alert('Failed to copy embed code');
             }
         });
+
+
+
+
+
+        
     </script>
 </body>
 </html>
